@@ -1,2 +1,4 @@
 node_modules
 public/socket.io
+# Local Netlify folder
+.netlify

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const messagesContainer = document.getElementById('messages');
     const messageForm = document.getElementById('message-form');
     const messageInput = document.getElementById('message-input');
-    const logoutButton = document.getElementById('logout-button'); // Assuming you add an id to your logout button
+    const logoutButton = document.getElementById('logout-button');
 
     // Audio element for playing sound
     const messageSound = new Audio('../assets/ting.mp3');
@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     };
 
-    // Handle message submission
     messageForm.addEventListener('submit', event => {
         event.preventDefault();
         const message = messageInput.value;
@@ -47,26 +46,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Listen for messages from the server
     socket.on('chat message', (msg) => {
         appendMessage(`${msg.userName}: ${msg.message}`, false);
-        // Play sound only when a message is received from someone else
         if (msg.userName !== userName) {
             messageSound.play();
         }
     });
 
-    // Listen for user joined messages
     socket.on('user joined', (newUser) => {
         appendMessage(`${newUser} joined the chat`, false);
-        // Play sound when a new user joins
         messageSound.play();
     });
 });
 
 function logoutButtonClick(){
     if (confirm("Are you sure you want to logout?")) {
-        // Redirect to logout success page
         window.location.href = 'logout.html';
     }
 }
